@@ -65,7 +65,10 @@ app.get('/tygia', async (req, res) => {
     const date = req.query.date; // Ngày dạng 'YYYY-MM-DD'
      if (!date) return res.status(400).json({ error: 'Missing date parameter' });
     const formattedDate = formatDate(date); // Định dạng lại ngày nếu cần
-    const browser = await puppeteer.launch({ headless: false }); // Để hiện trình duyệt
+    const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
     const page = await browser.newPage();
     await page.goto('https://tpb.vn/cong-cu-tinh-toan/ty-gia-ngoai-te', { waitUntil: 'networkidle2' });
 
