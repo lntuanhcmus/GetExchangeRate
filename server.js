@@ -129,7 +129,10 @@ app.get('/export-excel', async (req, res) => {
     if (!date) return res.status(400).json({ error: 'Missing date parameter' });
     const formattedDate = formatDate(date);
 
-    const browser = await puppeteer.launch({ headless: false });
+    puppeteer.launch({
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
     const page = await browser.newPage();
     await page.goto('https://tpb.vn/cong-cu-tinh-toan/ty-gia-ngoai-te', { waitUntil: 'networkidle2' });
 
